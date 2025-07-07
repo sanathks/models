@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(ollama create:*)",
+      "Bash(rm:*)",
+      "Bash(ls:*)",
+      "Bash(python3:*)"
+    ],
+    "deny": []
+  }
+}
