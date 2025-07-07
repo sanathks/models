@@ -90,9 +90,4 @@ flowchart TD
     Q -->|No| V[Final Response]
     
     B -.->|Performance Optimized| W[System Prompt:<br/>• Fast path for known tools<br/>• Tool calls only when needed<br/>• No hallucination]
-    
-    style D fill:#90EE90
-    style G fill:#FFB6C1
-    style K fill:#87CEEB
-    style T fill:#FFA07A
 ```
