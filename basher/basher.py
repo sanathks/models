@@ -746,7 +746,6 @@ class CLIAnalyzer:
         """Get help text using various methods with locale filtering"""
         # For subcommands, try different approaches
         if ' ' in command:
-            # This is a subcommand like "can-cli app"
             parts = command.split()
             help_variations = [
                 parts + ['--help'],
@@ -983,7 +982,7 @@ class Basher:
                     if self.show_debug:
                         print(f"DEBUG: Tool call '{function_name}' took {tool_end_time - tool_start_time:.2f}s")
 
-                self.progress.start_spinner("Constructing final command...")
+                self.progress.start_spinner("")
                 
                 # Get final response after tool calls
                 final_ollama_start_time = time.time()
@@ -1276,9 +1275,6 @@ def main():
         print("  --no-progress   Disable progress indicators")
         print("  --debug         Show debug logging")
         print("\nExamples:")
-        print("  python basher.py 'How to deploy to production with can-cli'")
-        print("  python basher.py 'Check pod logs with can-cli' --thinking")
-        print("  python basher.py --analyze can-cli")
         print("  python basher.py --risk 'rm -rf /tmp'")
         sys.exit(1)
     
