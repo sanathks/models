@@ -55,3 +55,44 @@ $ python -m basher --analyze kubectl
 # Check command risk
 $ python -m basher --risk "rm -rf /"
 ```
+
+## How It Works
+
+```mermaid
+flowchart TD
+    A[User Query] --> B[Basher LLM]
+    B --> C{Tool Known?}
+    
+    C -->|Known Tool<br/>kubectl, docker, git| D[Direct Response]
+    D --> E[Clean Output]
+    E --> F[Final Command]
+    
+    C -->|Unknown Tool<br/>Custom CLI| G[Call get_command_analysis]
+    G --> H[Check Cache]
+    H --> I{Cache Hit?}
+    
+    I -->|Yes| J[Return Cached Analysis]
+    I -->|No| K[CLI Analyzer]
+    K --> L[Parse Help Text]
+    L --> M[Detect Framework]
+    M --> N[Extract Subcommands]
+    N --> O[Cache Result]
+    O --> J
+    
+    J --> P[Tool Result to LLM]
+    P --> Q{Risky Command?}
+    
+    Q -->|Yes| R[Call assess_basic_risk]
+    R --> S[Risk Analysis]
+    S --> T[Add Warning]
+    T --> U[Final Response with Warning]
+    
+    Q -->|No| V[Final Response]
+    
+    B -.->|Performance Optimized| W[System Prompt:<br/>• Fast path for known tools<br/>• Tool calls only when needed<br/>• No hallucination]
+    
+    style D fill:#90EE90
+    style G fill:#FFB6C1
+    style K fill:#87CEEB
+    style T fill:#FFA07A
+```
